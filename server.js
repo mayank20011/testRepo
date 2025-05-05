@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import userRouter from "./routes/users.js";
 import "./config/db.js";
 import blogsRouter from "./routes/blog.js";
+import cors from "cors";
 
 // dotenv path config
 dotenv.config({ path: "./config.env" });
@@ -14,6 +15,8 @@ const server = express();
 
 // body parser middleware
 server.use(express.json());
+// cors
+server.use(cors());
 
 // to check if server is working or not
 server.get("/", (req, res) => {
