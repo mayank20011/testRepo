@@ -1,4 +1,5 @@
 import { Schema } from "mongoose";
+import mongoose from "mongoose";
 
 const blogSchema = new Schema({
   title: {
@@ -8,6 +9,10 @@ const blogSchema = new Schema({
   pera: {
     type: String,
     required: [true, "Enter Blog Data"],
+  },
+  img:{
+    type:String,
+    required:[true, "Enter Image Url"]
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
@@ -22,5 +27,5 @@ const blogSchema = new Schema({
   },
 });
 
-const blog = user.model("blog",blogSchema);
+const blog = mongoose.model("blog",blogSchema);
 export default blog;

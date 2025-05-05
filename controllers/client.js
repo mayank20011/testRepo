@@ -21,7 +21,9 @@ export function getUser(req, res) {
 
 export function postUser(req, res) {
   const obj = req.body;
+
   user.find({ email: obj.email }).then((data) => {
+
     if (data.length != 0) {
       res.status(409).send({
         success: false,
@@ -36,7 +38,8 @@ export function postUser(req, res) {
             data: data,
           });
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log(err);
           res.status(500).json({
             success: false,
             error: "Server Problem",
