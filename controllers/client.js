@@ -12,9 +12,10 @@ export function getUser(req, res) {
       });
     })
     .catch((error) => {
+      console.log(error);
       res.status(500).json({
         success: false,
-        err: "Server Problem",
+        error: "Server Problem",
       });
     });
 }
@@ -25,7 +26,7 @@ export function postUser(req, res) {
   user.find({ email: obj.email }).then((data) => {
 
     if (data.length != 0) {
-      res.status(409).send({
+      res.status(409).json({
         success: false,
         error: "Email Already Exist",
       });
