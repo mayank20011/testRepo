@@ -8,7 +8,7 @@ export function getUser(req, res) {
       if (data.length == 0) {
         res.status(200).json({
           success:false,
-          error:"No Suct User",
+          error:"Incorrect Email password or No Such User",
         })
       } else {
         res.status(200).json({

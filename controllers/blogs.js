@@ -12,7 +12,7 @@ export const getAllBlogs = (req, res) => {
     })
     .catch((err) => {
       res.status(500).json({
-        status: false,
+        success: false,
         error: "Server Problem",
       });
       console.log(err);
@@ -25,14 +25,14 @@ export const createBlog = (req, res) => {
     .create(data)
     .then((data) => {
       res.status(201).json({
-        status: true,
+        success: true,
         data: data,
       });
     })
     .catch((err) => {
       console.log(err);
       res.status(500).json({
-        status: false,
+        success: false,
         error: "Server problem",
       });
     });
