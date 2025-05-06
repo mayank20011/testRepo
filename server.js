@@ -16,7 +16,11 @@ const server = express();
 // body parser middleware
 server.use(express.json());
 // cors
-server.use(cors());
+server.use(cors({
+  origin :"*",
+  methods:["GET","PUT","POST","PATCH","DELETE"],
+  allowedHeaders: ["Content-Type"]
+}));
 
 // to check if server is working or not
 server.get("/", (req, res) => {

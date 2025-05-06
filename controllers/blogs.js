@@ -49,7 +49,7 @@ export const deleteBlog = (req, res) => {
           error: "Blog Not Found",
         });
       } else {
-        req.status(200).json({
+        res.status(200).json({
           success: true,
           data: data,
         });
