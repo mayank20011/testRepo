@@ -5,11 +5,18 @@ export function getUser(req, res) {
   user
     .find(obj)
     .then((data) => {
-      res.status(200).json({
-        success: true,
-        data: data,
-        length: data.length,
-      });
+      if (data.length == 0) {
+        res.status(200).json({
+          success:false,
+          error:"No Suct User",
+        })
+      } else {
+        res.status(200).json({
+          success: true,
+          data: data,
+          length: data.length,
+        });
+      }
     })
     .catch((error) => {
       console.log(error);
@@ -24,9 +31,8 @@ export function postUser(req, res) {
   const obj = req.body;
 
   user.find({ email: obj.email }).then((data) => {
-
     if (data.length != 0) {
-      res.status(409).json({
+      res.status(200).json({
         success: false,
         error: "Email Already Exist",
       });
