@@ -3,6 +3,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Loader from "./loader";
 
 const Login = ({ setForm }) => {
   const navigate = useNavigate();
@@ -69,11 +70,11 @@ const Login = ({ setForm }) => {
       </div>
       <button
         type="submit"
-        className="border rounded-sm hover:scale-95 transition py-2 cursor-pointer flex text-center gap-2 w-full justify-center items-center"
+        className={`border rounded-sm hover:scale-95 transition py-2 cursor-pointer flex text-center gap-2 w-full justify-center items-center bg-black text-white ${reqState?'opacity-20':''}`}
         disabled={isDisable}
       >
         {reqState ? (
-          <p className="p-2 border rounded-full border-l-0 border-t-0 animate-spin"></p>
+          <Loader color={"white"}/>
         ) : (
           <p>Login Account</p>
         )}

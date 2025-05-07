@@ -14,6 +14,7 @@ const CreateBlog = () => {
     data.append("file", file);
     data.append("upload_preset", "First_time_using_clodinary");
     data.append("cloud_name", " dvpzwwrcd");
+    setisImgLoaded(false);
     axios
       .post("https://api.cloudinary.com/v1_1/dvpzwwrcd/image/upload", data)
       .then((res) => {
@@ -23,6 +24,7 @@ const CreateBlog = () => {
       .catch((err) => {
         toast.error("Something Went Wrong While Uploading Image");
         console.log(err);
+        setisImgLoaded(true);
       });
   }
 
@@ -44,6 +46,7 @@ const CreateBlog = () => {
         if(res.data.success==true){
            toast.success("Blog Created SuccessFully");
            e.target.reset();
+           setImgUrl("");
         }
         else{
           toast.error(`${res.data.error}`);
@@ -88,6 +91,7 @@ const CreateBlog = () => {
           className="p-2 border rounded-md w-fit cursor-pointer"
           onChange={handleImageUpload}
         />
+        {isImgLoaded == false ? <Loader color={"black"}/>:null}
         {imgUrl != "" ? (
           <img src={imgUrl} className="w-[50px] h-[50px]" />
         ) : null}

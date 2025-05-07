@@ -70,7 +70,7 @@ const Signup = ({ setForm }) => {
                 console.log(res.data.data);
                 toast.success("User Created Successfully");
                 e.target.reset();
-                isImgLoaded(false);
+                setisImgLoaded(false);
                 setForm("login");
               } else {
                 toast.error(`${res.data.error}`);
@@ -138,12 +138,12 @@ const Signup = ({ setForm }) => {
       </div>
       <button
         type="submit"
-        className={`border rounded-sm hover:scale-95 transition py-2 cursor-pointer flex text-center gap-2 w-full justify-center items-center ${
-          isDisable ? "opacity-10" : ""
+        className={`border rounded-sm hover:scale-95 transition py-2 cursor-pointer flex text-center gap-2 w-full justify-center items-center bg-black text-white ${
+          isDisable ? "opacity-20" : ""
         }`}
         disabled={isDisable}
       >
-        {reqState ? <Loader color={"black"} /> : <p>Create Account</p>}
+        {reqState ? <Loader color={"white"} /> : <p className="text-white">Create Account</p>}
       </button>
       <p
         onClick={() => {
