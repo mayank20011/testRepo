@@ -36,7 +36,7 @@ const ReadBlogs = () => {
   }
   return (
     isEmpty == false ?
-    <div className="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {blogs.map((data) => (
         <div
           key={data._id}
@@ -45,7 +45,7 @@ const ReadBlogs = () => {
           <img
             src={data.img}
             alt={"blog image"}
-            className="w-full aspect-square"
+            className="w-full aspect-square bg-black"
           />
           <div className="flex flex-col gap-4 grow borderp-2">
             <h1 className="text-2xl font-bold">{data.title}</h1>
