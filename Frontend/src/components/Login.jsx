@@ -8,7 +8,6 @@ const Login = ({ setForm }) => {
   const navigate = useNavigate();
   const [reqState, setReqState] = useState(false);
   const [isDisable, setIsDisable] = useState(false);
-
   function handleSubmit(e) {
     e.preventDefault();
     const obj = {
@@ -24,18 +23,15 @@ const Login = ({ setForm }) => {
         setIsDisable(true);
         setReqState(true);
         axios
-          .post(
-            "https://test-repo-taupe-seven.vercel.app/api/v1/user",
-            obj
-          )
+          .post("https://test-repo-taupe-seven.vercel.app/api/v1/user", obj)
           .then((res) => {
             setIsDisable(false);
             setReqState(false);
-            if(res.data.success == true){
-              sessionStorage.setItem("userData",JSON.stringify(res.data.data));
+            if (res.data.success == true) {
+              sessionStorage.setItem("userData", JSON.stringify(res.data.data));
+              sessionStorage.setItem("isLogedIn", true);
               navigate("/dashboard/create-blog");
-            }
-            else{
+            } else {
               toast.error(`${res.data.error}`);
             }
           })

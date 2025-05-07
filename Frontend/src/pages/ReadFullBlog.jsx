@@ -7,7 +7,7 @@ const ReadFullBlog = () => {
   const location = useLocation();
   const data = location.state || {};
   const { id } = params;
-
+  console.log(sessionStorage.getItem("isLogedIn"));
   return (
     <div className="flex w-full min-h-screen py-6 items-center justify-center">
       <div className="flex gap-6 flex-col md:flex-row">

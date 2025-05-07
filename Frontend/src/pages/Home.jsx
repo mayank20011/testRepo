@@ -4,9 +4,8 @@ import Signup from '../components/Signup';
 import Login from '../components/Login';
 
 const Home = () => {
-
+  sessionStorage.setItem("isLogedIn", false);
   const [form, setForm] = useState("login");
-  console.log("Home Page");
   return (
     <div className="w-full min-h-screen bg-neutral-700 flex justify-center items-center">
         {form == "signUp" ? (
