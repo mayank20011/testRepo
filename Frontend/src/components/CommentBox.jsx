@@ -25,6 +25,7 @@ const CommentBox = ({ postId }) => {
         .then((res) => {
           if (res.data.success == true) {
             toast.success("Comment Added Successfully");
+            e.target.reset();
             if (comments?.length > 0) {
               setComments([obj, ...comments]);
             } else {
@@ -76,7 +77,7 @@ const CommentBox = ({ postId }) => {
                   alt={`profile pic`}
                   width={30}
                   height={30}
-                  className="border rounded-full"
+                  className="border rounded-full aspect-square"
                 />
                 <p className="text-xs">{data.email}</p>
               </div>

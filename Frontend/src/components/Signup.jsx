@@ -3,14 +3,16 @@ import { toast } from "react-toastify";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Loader from "./loader";
 
 const Signup = ({ setForm }) => {
   // for image upload and url
   const [isImgLoaded, setisImgLoaded] = useState(null);
+
+  // for img url once the image is created
   const [imgUrl, setImgUrl] = useState("");
 
-  const navigate = useNavigate();
-
+  // to test whats the status of req
   const [reqState, setReqState] = useState(false);
 
   // for dissabling button
@@ -23,6 +25,7 @@ const Signup = ({ setForm }) => {
     data.append("file", file);
     data.append("upload_preset", "First_time_using_clodinary");
     data.append("cloud_name", " dvpzwwrcd");
+    setisImgLoaded(false);
     axios
       .post("https://api.cloudinary.com/v1_1/dvpzwwrcd/image/upload", data)
       .then((res) => {
@@ -32,6 +35,7 @@ const Signup = ({ setForm }) => {
       .catch((err) => {
         toast.error("Something Went Wrong While Uploading Image");
         console.log(err);
+        setisImgLoaded(true);
       });
   }
 
@@ -63,14 +67,16 @@ const Signup = ({ setForm }) => {
             )
             .then((res) => {
               if (res.data.success == true) {
+                console.log(res.data.data);
                 toast.success("User Created Successfully");
                 e.target.reset();
+                isImgLoaded(false);
+                setForm("login");
               } else {
                 toast.error(`${res.data.error}`);
               }
               setIsDisable(false);
               setReqState(false);
-              // navigate("/dashboard/create-blog")
             })
             .catch((err) => {
               toast.error("Server Issue");
@@ -119,7 +125,6 @@ const Signup = ({ setForm }) => {
           type="file"
           accept="image/*"
           className="border w-fit p-2"
-          placeholder="chose Image"
           onChange={handleImageUpload}
         />
         {isImgLoaded == true ? (
@@ -128,20 +133,17 @@ const Signup = ({ setForm }) => {
             alt="uploaded Image"
             className="w-[50px] h-[50px]"
           />
-        ) : isImgLoaded == false ? (
-          <p className="p-2 border rounded-full w-fit border-t-0 border-r-0 animate-spin"></p>
         ) : null}
+        {isImgLoaded == false ? <Loader color={"black"} /> : null}
       </div>
       <button
         type="submit"
-        className="border rounded-sm hover:scale-95 transition py-2 cursor-pointer flex text-center gap-2 w-full justify-center items-center"
+        className={`border rounded-sm hover:scale-95 transition py-2 cursor-pointer flex text-center gap-2 w-full justify-center items-center ${
+          isDisable ? "opacity-10" : ""
+        }`}
         disabled={isDisable}
       >
-        {reqState ? (
-          <p className="p-2 border rounded-full border-l-0 border-t-0 animate-spin"></p>
-        ) : (
-          <p>Create Account</p>
-        )}
+        {reqState ? <Loader color={"black"} /> : <p>Create Account</p>}
       </button>
       <p
         onClick={() => {

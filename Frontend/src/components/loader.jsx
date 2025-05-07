@@ -1,9 +1,9 @@
 import React from 'react'
 
-const loader = ({color}) => {
+const Loader = ({color}) => {
   return (
-    <div className="p-2 border rounded-full animate-spin" style={{color:color}}>loader</div>
+    <div className="p-2 border rounded-full animate-spin w-fit border-t-0 border-r-0 mx-auto" style={{color:color}}></div>
   )
 }
 
-export default loader
+export default Loader

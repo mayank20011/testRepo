@@ -44,7 +44,3 @@ connectDb()
     console.error("Failed To connect to mongodb", err);
     process.exit(1);
   });
-
-// server.listen(PORT, () => {
-//   console.log(`Server Running on Port: ${PORT}`);
-// });

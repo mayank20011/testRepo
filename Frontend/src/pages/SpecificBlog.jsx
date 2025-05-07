@@ -3,13 +3,21 @@ import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Loader from "../components/loader";
 
 const SpecificBlog = () => {
-
   const { id } = useParams();
   const location = useLocation();
   const data = location.state || {};
   const navigate = useNavigate();
+
+  // for checking is req update req is on the way or not
+  const [reqSent, setReqSent] = useState(false);
+
+  // to check img upload status on cloudinary
+  const [isImgUploading, setIsImgUploading] = useState(null);
+
+  // for sending req to server
   const [formData, setFormData] = useState({
     title: "",
     pera: "",
@@ -30,8 +38,13 @@ const SpecificBlog = () => {
     if (formData.img == "" || formData.title == "" || formData.pera == "") {
       toast.error("All Fields are mendatory");
     } else {
+      setReqSent(true);
+
       axios
-        .patch(`https://test-repo-taupe-seven.vercel.app/api/v1/blog/${id}`, formData)
+        .patch(
+          `https://test-repo-taupe-seven.vercel.app/api/v1/blog/${id}`,
+          formData
+        )
         .then((res) => {
           if (res.data.succes == true) {
             console.log(res.data);
@@ -39,12 +52,15 @@ const SpecificBlog = () => {
             navigate(-1);
           } else {
             console.log(res);
-            toast.error("Something went wrong Try again later");
+            toast.error("Something went wrong , Try again later");
           }
+
+          setReqSent(false);
         })
         .catch((err) => {
           toast.error("Something Went Wrong");
           console.log(err);
+          setReqSent(false);
         });
     }
   }
@@ -56,15 +72,17 @@ const SpecificBlog = () => {
     data.append("file", file);
     data.append("upload_preset", "First_time_using_clodinary");
     data.append("cloud_name", " dvpzwwrcd");
+    setIsImgUploading(true);
     axios
       .post("https://api.cloudinary.com/v1_1/dvpzwwrcd/image/upload", data)
       .then((res) => {
-        // setUrl(res.data.url);
         setFormData({ ...formData, img: res.data.url });
+        setIsImgUploading(false);
       })
       .catch((err) => {
         toast.error("Something Went Wrong While Uploading Image");
         console.log(err);
+        setIsImgUploading(false);
       });
   }
 
@@ -99,7 +117,9 @@ const SpecificBlog = () => {
           />
         </div>
         <div>
-          {formData.img != "" ? (
+          {isImgUploading ? (
+            <Loader color={"black"} />
+          ) : formData.img != "" ? (
             <img
               src={formData.img}
               alt={"old image"}
@@ -115,9 +135,12 @@ const SpecificBlog = () => {
         </div>
         <button
           type="submit"
-          className="w-full px-4 py-2 rounded-2xl border bg-black text-white cursor-pointer hover:scale-95 transition"
+          className={`w-full px-4 py-2 rounded-2xl border bg-black text-white cursor-pointer hover:scale-95 transition ${
+            reqSent ? "opacity-30" : ""
+          }`}
+          disabled={reqSent}
         >
-          Update Blog
+          {reqSent ? <Loader color={"white"} /> : "Update Blog"}
         </button>
       </form>
     </div>
