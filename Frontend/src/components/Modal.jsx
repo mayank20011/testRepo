@@ -1,6 +1,7 @@
 import React from "react";
 
 const Modal = ({ closeModal, onDelete, blogId }) => {
+
   return (
     <div className="text-white bg-black flex flex-col gap-6 p-6 rounded-2xl relative">
       <h1>Do U Really Want To Delete Blog with id : {blogId} </h1>

@@ -2,10 +2,12 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Loader from "./loader.jsx";
 
 const CommentBox = ({ postId }) => {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [submitLoading, setSubmitLoading] = useState(false);
   let userData = JSON.parse(sessionStorage.getItem("userData"));
   userData = userData[0];
 
@@ -20,6 +22,7 @@ const CommentBox = ({ postId }) => {
         data: e.target[0].value,
         postId: postId,
       };
+      setSubmitLoading(true);
       axios
         .post("https://test-repo-taupe-seven.vercel.app/api/v1/comment/", obj)
         .then((res) => {
@@ -34,10 +37,12 @@ const CommentBox = ({ postId }) => {
           } else {
             toast.error(res.data.error);
           }
+          setSubmitLoading(false);
         })
         .catch((error) => {
           console.log(error);
           toast.error("Server Problem");
+          setSubmitLoading(false);
         });
     }
   }
@@ -97,9 +102,10 @@ const CommentBox = ({ postId }) => {
         />
         <button
           type="submit"
-          className="sm:text-xs lg:text-base  px-2 py-1 border rounded-sm text-white bg-black hover:scale-95 transition cursor-pointer"
+          className={`px-2 py-1 border rounded-sm text-white bg-black hover:scale-95 transition cursor-pointer ${submitLoading ? 'opacity-30' : ''}`}
+          disabled={submitLoading}
         >
-          Submit Comment
+          {submitLoading ? <Loader color={"white"}/> :'Submit Comment'}
         </button>
       </form>
     </div>

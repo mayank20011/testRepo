@@ -20,7 +20,6 @@ const UpdateBlogs = () => {
   }
 
   const onDelete = () => {
-    console.log(blogId);
     axios
       .delete(`https://test-repo-taupe-seven.vercel.app/api/v1/blog/${blogId}`)
       .then((res) => {
@@ -34,7 +33,7 @@ const UpdateBlogs = () => {
       })
       .catch((err) => {
         console.log(err);
-        toast.error("Something Went Wrong Try AGain Later");
+        toast.error("Something Went Wrong Try Again Later");
       });
   };
 
